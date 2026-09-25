@@ -1,0 +1,12 @@
+.next/
+node_modules/
+.env*
+!.env.example
+worker/.venv/
+worker/logs/*.log
+worker/logs/*.json
+__pycache__/
+*.pyc
+.DS_Store
+source-bundle/source.b64
+source-bundle/source.tar.gz
