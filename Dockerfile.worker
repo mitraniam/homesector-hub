@@ -1,0 +1,22 @@
+FROM python:3.12-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1
+
+WORKDIR /app
+
+COPY source-bundle/ /app/source-bundle/
+
+RUN cat /app/source-bundle/part-*.txt > /tmp/source.b64 \
+    && python -c "import base64; open('/tmp/source.tar.gz','wb').write(base64.b64decode(open('/tmp/source.b64','rb').read()))" \
+    && tar -xzf /tmp/source.tar.gz -C /app \
+    && pip install --upgrade pip \
+    && pip install -r /app/worker/requirements.txt \
+    && rm -rf /tmp/source.b64 /tmp/source.tar.gz /app/source-bundle
+
+WORKDIR /app/worker
+
+EXPOSE 8787
+
+CMD ["sh", "-c", "uvicorn app:app --host 0.0.0.0 --port ${PORT:-8787}"]
