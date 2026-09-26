@@ -1,4 +1,4 @@
 {
-  "installCommand": "cat source-bundle/part-*.txt > source-bundle/source.b64 && node -e \"const fs=require('fs');fs.writeFileSync('source-bundle/source.tar.gz',Buffer.from(fs.readFileSync('source-bundle/source.b64','utf8'),'base64'))\" && tar -xzf source-bundle/source.tar.gz && npm install --no-audit --no-fund",
+  "installCommand": "cat source-bundle/part-*.txt > source-bundle/source.b64 && node -e \"const fs=require('fs');fs.writeFileSync('source-bundle/source.tar.gz',Buffer.from(fs.readFileSync('source-bundle/source.b64','utf8'),'base64'))\" && tar -xzf source-bundle/source.tar.gz && cp patches/easyrea-page.tsx src/app/easyrea/page.tsx && cp patches/package.json package.json && npm install --no-audit --no-fund",
   "buildCommand": "npm run build"
 }
